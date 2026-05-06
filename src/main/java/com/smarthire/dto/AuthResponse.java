@@ -22,6 +22,8 @@ public class AuthResponse {
 		this.role = role;
 	}
 
+	// getters
+
 	public String getMessage() {
 		return message;
 	}
@@ -37,6 +39,8 @@ public class AuthResponse {
 	public String getRole() {
 		return role;
 	}
+
+	// setters
 
 	public void setMessage(String message) {
 		this.message = message;
