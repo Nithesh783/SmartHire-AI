@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.smarthire.dto.ResumeResponse;
 import com.smarthire.entity.Resume;
 import com.smarthire.entity.User;
-import com.smarthire.parser.ResumeParser;
-import com.smarthire.parser.SkillExtractor;
 import com.smarthire.repository.ResumeRepository;
 import com.smarthire.repository.UserRepository;
+import com.smarthire.parser.ResumeParser;
+import com.smarthire.parser.SkillExtractor;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -40,12 +40,18 @@ public class ResumeServiceImpl implements ResumeService {
 		Optional<User> optionalUser = userRepository.findByEmail(email);
 
 		if (optionalUser.isEmpty()) {
-			return new ResumeResponse("User not found", null, false);
+			return new ResumeResponse("User not found", null, false, null);
 		}
 
 		User user = optionalUser.get();
 
 		try {
+
+			Optional<Resume> existingResume = resumeRepository.findByUser(user);
+
+			if (existingResume.isPresent()) {
+				resumeRepository.delete(existingResume.get());
+			}
 
 			File directory = new File(UPLOAD_DIR);
 
@@ -65,12 +71,7 @@ public class ResumeServiceImpl implements ResumeService {
 
 			String extractedSkills = skillExtractor.extractSkills(resumeText);
 
-			// Check if user already uploaded resume
-			Optional<Resume> existingResume = resumeRepository.findByUser(user);
-
-			// Update existing resume OR create new one
-			Resume resume = existingResume.orElse(new Resume());
-
+			Resume resume = new Resume();
 			resume.setFileName(fileName);
 			resume.setFilePath(filePath);
 			resume.setUploadedAt(LocalDateTime.now());
@@ -79,11 +80,11 @@ public class ResumeServiceImpl implements ResumeService {
 
 			resumeRepository.save(resume);
 
-			return new ResumeResponse("Resume uploaded successfully", fileName, true);
+			return new ResumeResponse("Resume uploaded successfully", fileName, true, extractedSkills);
 
 		} catch (IOException e) {
 
-			return new ResumeResponse("Resume upload failed: " + e.getMessage(), null, false);
+			return new ResumeResponse("Resume upload failed: " + e.getMessage(), null, false, null);
 		}
 	}
 }

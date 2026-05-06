@@ -1,6 +1,5 @@
 package com.smarthire.dto;
 
-import com.smarthire.entity.ApplicationStatus;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -14,7 +13,6 @@ public class ApplicationResponse {
     private String candidateEmail;
     private String jobTitle;
     private double matchScore;
-    private ApplicationStatus status;
     private String extractedSkills;
     private LocalDateTime appliedAt;
 }

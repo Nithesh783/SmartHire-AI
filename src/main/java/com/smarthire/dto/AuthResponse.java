@@ -2,45 +2,55 @@ package com.smarthire.dto;
 
 public class AuthResponse {
 
-    private String message;
-    private boolean status;
-    private String token;
+	private String message;
+	private boolean success;
+	private String token;
+	private String role;
 
-    public AuthResponse() {
-    }
+	public AuthResponse() {
+	}
 
-    public AuthResponse(String message, boolean status) {
-        this.message = message;
-        this.status = status;
-    }
+	public AuthResponse(String message, boolean success) {
+		this.message = message;
+		this.success = success;
+	}
 
-    public AuthResponse(String message, boolean status, String token) {
-        this.message = message;
-        this.status = status;
-        this.token = token;
-    }
+	public AuthResponse(String message, boolean success, String token, String role) {
+		this.message = message;
+		this.success = success;
+		this.token = token;
+		this.role = role;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public boolean isStatus() {
-        return status;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

@@ -66,8 +66,11 @@ public class AuthServiceImpl implements AuthService {
 		authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-		String token = jwtUtil.generateToken(user.getEmail());
+		// ✅ Generate token with role
+		String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
 
-		return new AuthResponse("Login successful as " + user.getRole(), true, token);
+		// ✅ IMPORTANT FIX: return role also
+		return new AuthResponse("Login successful", true, token, user.getRole().name() // ✅ THIS FIXES YOUR ISSUE
+		);
 	}
 }

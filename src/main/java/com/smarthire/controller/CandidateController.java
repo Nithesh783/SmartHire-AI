@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.smarthire.dto.ResumeResponse;
 import com.smarthire.service.ResumeService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/candidate")
 public class CandidateController {

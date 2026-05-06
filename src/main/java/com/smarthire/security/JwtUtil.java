@@ -23,11 +23,11 @@ public class JwtUtil {
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	// 2. Generate token using email
-	public String generateToken(String email) {
-		return Jwts.builder().setSubject(email).setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
-				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+	public String generateToken(String email, String role) {
+
+		return Jwts.builder().setSubject(email).claim("role", role) // ✅ IMPORTANT
+				.setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
 	// 3. Extract email from token
